@@ -1,5 +1,5 @@
 {
-	"name": "DS_LOCATION_DIM",
+	"name": "DS_BREED_DIM",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_snowflake_demo1",
@@ -9,26 +9,26 @@
 		"type": "SnowflakeV2Table",
 		"schema": [
 			{
-				"name": "LOCATION_SK",
+				"name": "BREED_SK",
 				"type": "NUMBER",
 				"precision": 10,
 				"scale": 0
 			},
 			{
-				"name": "ZIP",
+				"name": "PRIMARY_BREED_NAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "CITY",
+				"name": "SECONDARY_BREED_NAME",
 				"type": "VARCHAR"
 			},
 			{
-				"name": "STATE",
+				"name": "SPECIES_NAME",
 				"type": "VARCHAR"
 			},
 			{
 				"name": "DI_JOB_ID",
-				"type": "DATE"
+				"type": "VARCHAR"
 			},
 			{
 				"name": "DI_CREATED_DT",
@@ -37,7 +37,7 @@
 		],
 		"typeProperties": {
 			"schema": "STAGE",
-			"table": "LOCATION_DIM"
+			"table": "BREED_DIM"
 		}
 	}
 }

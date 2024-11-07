@@ -12,15 +12,29 @@
 					"name": "sourceStg"
 				},
 				{
-					"name": "sourceBreedDim",
-					"description": "Import data from ds_Edw_Breed_Dim"
+					"dataset": {
+						"referenceName": "DS_BREED_DIM",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_LOCATION_DIM",
+						"type": "DatasetReference"
+					},
+					"name": "sink1",
+					"rejectedDataLinkedService": {
+						"referenceName": "storagefall2024damg7370",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
 			"transformations": [
 				{
-					"name": "sourcedatawithsk",
-					"description": "Custom (cross) join on 'sourceStg' and \n'sourceBreedDim'"
+					"name": "sourcedatawithsk"
 				},
 				{
 					"name": "aggregatebreedkeys",
@@ -36,6 +50,9 @@
 				}
 			],
 			"scriptLines": [
+				"parameters{",
+				"     DI_CREATED_ID as string (\"59\")",
+				"}",
 				"source(output(",
 				"          LICENSE_ISSUE_DATE as string,",
 				"          LICENSE_NUMBER as string,",
@@ -51,22 +68,49 @@
 				"     validateSchema: false,",
 				"     limit: 100,",
 				"     format: 'table') ~> sourceStg",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> sourceBreedDim",
-				"sourceStg, sourceBreedDim join(1==1,",
+				"source(output(",
+				"          MAXBREEDSK as decimal(10,0)",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     query: 'SELECT NVL(MAX(BREED_SK),0) AS MAXBREEDSK FROM STAGE.BREED_DIM',",
+				"     format: 'query') ~> source1",
+				"sourceStg, source1 join(1==1,",
 				"     joinType:'cross',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> sourcedatawithsk",
-				"sourcedatawithsk aggregate(groupBy({} = ERROR_FUNCTION(''),",
-				"          {} = ERROR_FUNCTION('')),",
+				"sourcedatawithsk aggregate(groupBy(SPECIES,",
+				"          PRIMARY_BREED,",
+				"          SECONDARY_BREED,",
+				"          MAXBREEDSK),",
 				"     COUNT_ROW = count(LICENSE_NUMBER)) ~> aggregatebreedkeys",
 				"aggregatebreedkeys keyGenerate(output(RowNum as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 derive(BREED_SK = MAXBREEDSK + RowNum,",
 				"          DI_CREATED_DT = toString(currentDate(),'yyyy-MM-dd'),",
-				"          DI_JOB_ID = $DI_JOB_ID) ~> derivedColumn1"
+				"          DI_JOB_ID = $DI_JOB_ID) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: false,",
+				"     validateSchema: false,",
+				"     input(",
+				"          LOCATION_SK as string,",
+				"          ZIP as string,",
+				"          CITY as string,",
+				"          STATE as string,",
+				"          DI_JOB_ID as string,",
+				"          DI_CREATED_DT as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapOutputs: true,",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          DI_CREATED_DT",
+				"     )) ~> sink1"
 			]
 		}
 	}
