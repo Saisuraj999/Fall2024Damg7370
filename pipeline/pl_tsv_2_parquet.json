@@ -17,6 +17,16 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "",
+								"value": ""
+							},
+							{
+								"name": "",
+								"value": ""
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
@@ -167,11 +177,17 @@
 						"additionalColumns": [
 							{
 								"name": "DI_JOB_ID",
-								"value": "$$FILEPATH"
+								"value": {
+									"value": "@pipeline().parameters.JobID",
+									"type": "Expression"
+								}
 							},
 							{
 								"name": "DI_CREATED_DT",
-								"value": ""
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
 							}
 						],
 						"storeSettings": {
