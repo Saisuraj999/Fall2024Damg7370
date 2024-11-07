@@ -22,7 +22,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_LOCATION_DIM",
+						"referenceName": "DS_BREED_DIM",
 						"type": "DatasetReference"
 					},
 					"name": "sink1",
@@ -51,7 +51,7 @@
 			],
 			"scriptLines": [
 				"parameters{",
-				"     DI_CREATED_ID as string (\"59\")",
+				"     DI_JOB_ID as string (\"59\")",
 				"}",
 				"source(output(",
 				"          LICENSE_ISSUE_DATE as string,",
@@ -94,10 +94,10 @@
 				"derivedColumn1 sink(allowSchemaDrift: false,",
 				"     validateSchema: false,",
 				"     input(",
-				"          LOCATION_SK as string,",
-				"          ZIP as string,",
-				"          CITY as string,",
-				"          STATE as string,",
+				"          BREED_SK as string,",
+				"          PRIMARY_BREED_NAME as string,",
+				"          SECONDARY_BREED_NAME as string,",
+				"          SPECIES_NAME as string,",
 				"          DI_JOB_ID as string,",
 				"          DI_CREATED_DT as string",
 				"     ),",
@@ -109,6 +109,11 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     stageInsert: true,",
 				"     mapColumn(",
+				"          BREED_SK,",
+				"          PRIMARY_BREED_NAME = PRIMARY_BREED,",
+				"          SECONDARY_BREED_NAME = SECONDARY_BREED,",
+				"          SPECIES_NAME = SPECIES,",
+				"          DI_JOB_ID,",
 				"          DI_CREATED_DT",
 				"     )) ~> sink1"
 			]
