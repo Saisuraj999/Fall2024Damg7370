@@ -1,0 +1,10 @@
+{
+	"name": "storagefall2024damg7370",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://storagefall2024damg7370.dfs.core.windows.net/"
+		}
+	}
+}
