@@ -25,6 +25,14 @@
 				{
 					"name": "aggregatebreedkeys",
 					"description": "Aggregating data by 'SPECIES', PRIMARY_BREED, SECONDARY_BREED, MAXBREEDSK' producing columns"
+				},
+				{
+					"name": "surrogateKey1",
+					"description": "Adding new key RowNum starting from 1 with step 1"
+				},
+				{
+					"name": "derivedColumn1",
+					"description": "Creating/updating the columns \n'SPECIES, PRIMARY_BREED, SECONDARY_BREED, MAXBREEDSK\n"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +60,13 @@
 				"     broadcast: 'auto')~> sourcedatawithsk",
 				"sourcedatawithsk aggregate(groupBy({} = ERROR_FUNCTION(''),",
 				"          {} = ERROR_FUNCTION('')),",
-				"     COUNT_ROW = count(LICENSE_NUMBER)) ~> aggregatebreedkeys"
+				"     COUNT_ROW = count(LICENSE_NUMBER)) ~> aggregatebreedkeys",
+				"aggregatebreedkeys keyGenerate(output(RowNum as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(BREED_SK = MAXBREEDSK + RowNum,",
+				"          DI_CREATED_DT = toString(currentDate(),'yyyy-MM-dd'),",
+				"          DI_JOB_ID = $DI_JOB_ID) ~> derivedColumn1"
 			]
 		}
 	}
