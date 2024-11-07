@@ -19,18 +19,12 @@
 						"type": "DelimitedTextSource",
 						"additionalColumns": [
 							{
-								"name": "DI_JOB_ID",
-								"value": {
-									"value": "@pipeline().parameters.JobID",
-									"type": "Expression"
-								}
+								"name": "",
+								"value": ""
 							},
 							{
-								"name": "DI_CREATED_DT",
-								"value": {
-									"value": "@utcNow()",
-									"type": "Expression"
-								}
+								"name": "",
+								"value": ""
 							}
 						],
 						"storeSettings": {
