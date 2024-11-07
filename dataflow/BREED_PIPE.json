@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "BREED_PIPE",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
