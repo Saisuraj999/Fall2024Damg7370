@@ -46,7 +46,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "License_Issue_Date",
+									"name": "License Issue Date",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -57,7 +58,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "License_Number",
+									"name": "License Number",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -68,7 +70,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Animal_Name",
+									"name": "Animal's Name",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -91,7 +94,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Primary_Breed",
+									"name": "Primary Breed",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -102,7 +106,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Secondary_Breed",
+									"name": "Secondary Breed",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
@@ -113,7 +118,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "ZIP_Code",
+									"name": "ZIP Code",
+									"type": "String",
 									"physicalType": "UTF8"
 								}
 							}
@@ -164,6 +170,22 @@
 				"typeProperties": {
 					"source": {
 						"type": "ParquetSource",
+						"additionalColumns": [
+							{
+								"name": "DI_JOB_ID",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							},
+							{
+								"name": "DI_CREATED_DT",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
