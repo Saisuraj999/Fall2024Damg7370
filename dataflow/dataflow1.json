@@ -17,7 +17,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "sourcedatawithsk",
+					"description": "Custom (cross) join on 'sourceStg' and \n'sourceBreedDim'"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          LICENSE_ISSUE_DATE as string,",
@@ -35,7 +40,12 @@
 				"     limit: 100,",
 				"     format: 'table') ~> sourceStg",
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> sourceBreedDim"
+				"     validateSchema: false) ~> sourceBreedDim",
+				"sourceStg, sourceBreedDim join(1==1,",
+				"     joinType:'cross',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> sourcedatawithsk"
 			]
 		}
 	}
