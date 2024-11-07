@@ -10,6 +10,10 @@
 						"type": "DatasetReference"
 					},
 					"name": "sourceStg"
+				},
+				{
+					"name": "sourceBreedDim",
+					"description": "Import data from ds_Edw_Breed_Dim"
 				}
 			],
 			"sinks": [],
@@ -28,7 +32,10 @@
 				"     ),",
 				"     allowSchemaDrift: false,",
 				"     validateSchema: false,",
-				"     format: 'table') ~> sourceStg"
+				"     limit: 100,",
+				"     format: 'table') ~> sourceStg",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> sourceBreedDim"
 			]
 		}
 	}
