@@ -95,7 +95,7 @@
 								"sink": {
 									"type": "ParquetSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
+										"type": "AzureBlobStorageWriteSettings"
 									},
 									"formatSettings": {
 										"type": "ParquetWriteSettings"
@@ -129,8 +129,15 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ds_read_parquet",
-									"type": "DatasetReference"
+									"referenceName": "ds_Parquet",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@concat(\n    item().table_name,'.parquet'\n)",
+											"type": "Expression"
+										},
+										"Directory": "na"
+									}
 								}
 							]
 						}
