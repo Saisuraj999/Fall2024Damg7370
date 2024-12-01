@@ -2,7 +2,7 @@
 	"name": "ds_Parquet",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_stgblobdamg7370",
+			"referenceName": "storagefall2024damg7370",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -17,7 +17,7 @@
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
+				"type": "AzureBlobFSLocation",
 				"fileName": {
 					"value": "@dataset().FileName",
 					"type": "Expression"
@@ -26,7 +26,7 @@
 					"value": "@if(equals(dataset().Directory,'na'),'',dataset().Directory)",
 					"type": "Expression"
 				},
-				"container": "silver"
+				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
