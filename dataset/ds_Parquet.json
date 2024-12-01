@@ -1,0 +1,16 @@
+{
+	"name": "ds_Parquet",
+	"properties": {
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
