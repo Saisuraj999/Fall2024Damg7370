@@ -16,7 +16,50 @@
 		},
 		"annotations": [],
 		"type": "SnowflakeV2Table",
-		"schema": [],
+		"schema": [
+			{
+				"name": "CUSTOMER_ID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "STORE_ID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "FIRST_NAME",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "LAST_NAME",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "EMAIL",
+				"type": "VARCHAR"
+			},
+			{
+				"name": "ADDRESS_ID",
+				"type": "NUMBER",
+				"precision": 38,
+				"scale": 0
+			},
+			{
+				"name": "ACTIVE",
+				"type": "BOOLEAN"
+			},
+			{
+				"name": "CREATE_DATE",
+				"type": "TIMESTAMP_NTZ"
+			},
+			{
+				"name": "LAST_UPDATE",
+				"type": "TIMESTAMP_NTZ"
+			}
+		],
 		"typeProperties": {
 			"schema": {
 				"value": "@dataset().schema_name",

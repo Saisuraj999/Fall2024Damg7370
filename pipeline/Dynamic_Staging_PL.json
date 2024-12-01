@@ -123,7 +123,7 @@
 							]
 						},
 						{
-							"name": "Parquet2Snowflake",
+							"name": "Parequet22Snowflake",
 							"type": "Copy",
 							"dependsOn": [
 								{
@@ -134,8 +134,8 @@
 								}
 							],
 							"policy": {
-								"timeout": "0.00:30:00",
-								"retry": 2,
+								"timeout": "0.12:00:00",
+								"retry": 0,
 								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
 								"secureInput": false
@@ -159,17 +159,20 @@
 										"type": "SnowflakeImportCopyCommand"
 									}
 								},
-								"enableStaging": false
+								"enableStaging": true,
+								"stagingSettings": {
+									"linkedServiceName": {
+										"referenceName": "ls_stgblobdamg7370",
+										"type": "LinkedServiceReference"
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "ds_Parquet",
 									"type": "DatasetReference",
 									"parameters": {
-										"FileName": {
-											"value": "@concat(\n    item().table_name,'.parquet'\n)",
-											"type": "Expression"
-										},
+										"FileName": "@concat(     item().table_name,'.parquet' )",
 										"Directory": "na"
 									}
 								}
